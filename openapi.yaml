@@ -1,0 +1,127 @@
+openapi: 3.1.0
+info:
+  title: Business Law Case Lookup API
+  description: |
+    This API allows searching and retrieving U.S. court cases relevant to business law using the CourtListener API.
+    Useful for finding case law on topics like contracts, intellectual property, and corporate disputes.
+    Supports advanced filters like jurisdiction, date range, and specific court searches.
+  version: 1.1.0
+servers:
+  - url: https://www.courtlistener.com/api/rest/v3
+    description: CourtListener API Server
+paths:
+  /opinions/:
+    get:
+      operationId: searchCases
+      summary: Search for court cases
+      description: |
+        Search U.S. court opinions based on keywords, jurisdiction, date range, and court.
+        Use filters to narrow down results and find relevant business law cases easily.
+      parameters:
+        - name: search
+          in: query
+          description: Keyword or phrase to search in case opinions (e.g. "contract breach").
+          required: true
+          schema:
+            type: string
+        - name: jurisdiction
+          in: query
+          description: |
+            Filter by jurisdiction. Options:
+              - "federal": Federal courts only
+              - "state": State courts only
+              - "all": No filter (default)
+          required: false
+          schema:
+            type: string
+            enum: [federal, state, all]
+            default: all
+        - name: court
+          in: query
+          description: Filter by court name (e.g. "Delaware Court of Chancery").
+          required: false
+          schema:
+            type: string
+        - name: date_from
+          in: query
+          description: Filter cases filed after this date (format YYYY-MM-DD).
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          description: Filter cases filed before this date (format YYYY-MM-DD).
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          description: Page number for paginated results.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of court opinions matching the search and filters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        case_name:
+                          type: string
+                        court:
+                          type: string
+                        date_filed:
+                          type: string
+                          format: date
+                        plain_text:
+                          type: string
+  /opinions/{id}/:
+    get:
+      operationId: getCaseById
+      summary: Retrieve specific case details
+      description: Get full details of a court opinion using its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the court opinion.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detailed information about the court opinion.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  case_name:
+                    type: string
+                  court:
+                    type: string
+                  date_filed:
+                    type: string
+                    format: date
+                  plain_text:
+                    type: string
