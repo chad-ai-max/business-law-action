@@ -1,0 +1,13 @@
+schema_version: 1.0
+name_for_human: Business Law Case Finder
+name_for_model: businessLawCaseFinder
+description_for_human: Search and retrieve U.S. court opinions related to business law.
+description_for_model: Use this Action to search and retrieve U.S. court opinions using keywords, filters, and case IDs. Ideal for finding relevant case law on business topics.
+auth:
+  type: none
+api:
+  type: openapi
+  url: https://raw.githubusercontent.com/yourusername/business-law-action/main/openapi.yaml
+logo_url: https://your-logo-url.com/logo.png
+contact_email: your-email@example.com
+legal_info_url: https://www.courtlistener.com/api/
