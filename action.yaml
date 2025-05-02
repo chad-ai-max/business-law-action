@@ -7,7 +7,7 @@ auth:
   type: none
 api:
   type: openapi
-  url: https://raw.githubusercontent.com/yourusername/business-law-action/main/openapi.yaml
+  url: https://raw.githubusercontent.com/chad-ai-max/business-law-action/main/openapi.yaml
 logo_url: https://your-logo-url.com/logo.png
 contact_email: your-email@example.com
 legal_info_url: https://www.courtlistener.com/api/
